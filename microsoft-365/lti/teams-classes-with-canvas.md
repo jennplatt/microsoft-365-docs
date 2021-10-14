@@ -20,13 +20,13 @@ description: "Integrate Microsoft Teams classes with Canvas"
 
 Microsoft Teams classes is a Learning Tools Interoperability (LTI) app that helps educators and students easily navigate between their Learning Management System (LMS) and Teams. Users can access their class teams associated with their course directly from within their LMS.
 
-## Prerequisites Before Deployment
+## Prerequisites before deployment
 
 > [!NOTE]
 > The current Teams classes LTI only supports syncing Canvas users with Microsoft Azure Active Directory (AAD) in a limited scope. 
 > - Your tenant must have an Microsoft Education license (A1 or higher).
 > - Only a single Microsoft tenant can be used for mapping users between Canvas and Microsoft.
-> - Your tenant must have an exact match between a Canvas field (email, Unique User ID, SIS ID, or Integration ID) and a field in AAD (User Principal Name (UPN), Primary Email Address (Mail), or Email Alias (mailNickname)).
+> - Your tenant must have an exact match between a Canvas field (email, unique user ID, SIS ID, or integration ID) and a field in AAD (user principal name (UPN), primary email address (mail), or email alias (mailNickname)).
 > - If you use SDS to create classes and groups, we recommend disabling the Team Creation Option in SDS and performing a [Group Cleanup](/schooldatasync/group-cleanup) to avoid duplication of classes. SDS can still be used to sync organization and user data.
 
 
@@ -43,9 +43,11 @@ To begin the integration, you need to enable the app in Canvas by enabling the d
 
 5. In the admin navigation, select the **Settings** link, and then the **Integrations** tab.
 
-6. Enable Microsoft Teams Sync by turning the toggle on. This sync allows classes to be created in Teams based on the enrollment of a course.
+6. Enable Microsoft Teams Sync by turning the toggle on.
    
    ![Canvas Teams Sync Updated png.](https://user-images.githubusercontent.com/87142492/128225881-abdfc52d-dc9e-48ad-aec5-f6617c6436f3.png)
+> [!NOTE]
+> Microsoft Teams Sync is managed by the Canvas administrator and allows educators to enable the sync at the individual course level using the Microsoft Graph API. When enabled, this sync allows classes to be created in Teams, and the membership is synced based on the enrollment of the course in Canvas.
 
 7. Fill out the following fields with the appropriate information. These fields will be used for matching users in Canvas with users in AAD. 
    * The **Tenant Name** is your Microsoft tenant name.
@@ -56,7 +58,7 @@ To begin the integration, you need to enable the app in Canvas by enabling the d
       * **Integration ID** is only populated via SIS imports and is viewable on the user's profile page. Typically, this unique identifier is provided by the institution and used in account trusts or consortia situations to identify users across multiple accounts.
 
    * The **Suffix** field is optional and lets you specify a domain when there isn't an exact mapping between Canvas attributes and Microsoft AAD fields. For example, if your Canvas email is 'name@example.edu' while the UPN in Microsoft AAD is 'name', you can match users by entering '@example.edu' in the suffix field. The domain should be entered in this field with the preceding @.
-   * The Active Directory Lookup Attribute is the field in AAD to which Canvas attributes are matched. Select in between UPN, primary email address, or the email alias.
+   * The **Active Directory Lookup Attribute** is the field in AAD to which Canvas attributes are matched. Select UPN, primary email address, or the email alias.
 
 8. Select **Update Settings**.
 
