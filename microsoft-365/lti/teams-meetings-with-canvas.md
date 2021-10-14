@@ -20,43 +20,63 @@ description: "Integrate Microsoft Teams meetings with Canvas"
 
 Microsoft Teams meetings is a Learning Tools Interoperability (LTI) app that helps educators and students easily navigate between their Learning Management System (LMS) and Teams. Users can access their class teams associated with their course directly from within their LMS.
 
-## Prerequisites Before Deployment
+## Prerequisites before deployment
 
 > [!NOTE]
 > The current Teams Meetings LTI only supports syncing Canvas users with Microsoft Azure Active Directory (AAD) in a limited scope. 
 > - Your tenant must have an Microsoft Education license.
 > - Only a single Microsoft tenant can be used for mapping users between Canvas and Microsoft.
-> - You will have to turn off School Data Sync (SDS) before using the Class Teams LTI in order to avoid duplication of groups.
+> - If you use SDS to create classes and groups, we recommend disabling the Team Creation Option in SDS and performing a Group Cleanup to avoid duplication of classes. SDS can still be used to sync organization and user data.
+> - For recording:
+>   -  Microsoft Stream needs to be enabled and have enouf storage for recordings.
+>     - Both meeting organizer and person initiating the recording must have a  Office 365 E1, E3, E5, A1, A3, A5, Microsoft 365 Business Premium, Business Standard, or Business 
+Basic license.
+>   - To record meetings and group calls, **Allow cloud recording** policy needs to be enabled (*CsTeamsMeetingPolicy - AllowCloudRecording* parameter set to true).
+>   - To record 1:1 calls, **Cloud recording is enabled for calling** policy to be enabled (*CsTeamsCallingPolicy - AllowCloudRecordingForCalls* parameter set to true).
+>   - To enable transcription, **Allow transcription** policy needs to be enabled (*CsTeamsMeetingPolicy - AllowTranscription* parameter set to true).
 
-## Microsoft Office 365 Admin
 
-Before managing the Microsoft Teams integration within Instructure Canvas, it is important to have Canvas’s **Microsoft-Teams-Sync-for-Canvas** Azure app approved by your institution’s Microsoft Office 365 admin in your Microsoft Azure tenant before completing the Canvas admin setup.
+## Enable the Microsoft Teams app in Canvas
 
-1. Sign in to Canvas.
+To begin the integration, you need to enable the app in Canvas by enabling the developer keys, enabling the Microsoft Teams Sync, and approving the Microsoft-Teams-Sync-for-Canvas app. Note that approving the app can only be performed by a Microsoft tenant admin that can approve apps.
+
+1. Sign in to Canvas as an administrator.
 
 2. Select the **Admin** link in the global navigation, and then select your account.
 
-3. In the admin navigation, select the **Settings** link, and then the **Integrations** tab.
+3. In the admin navigation, select the **Developer Keys** link, and then select the **Inherited** tab.
+
+4. Enable the LTI apps you are going to deploy by selecting the **ON** state for each of the appropriate apps.
+
+5. In the admin navigation, select the **Settings** link, and then the **Integrations** tab.
+
 
 ![Canvas Teams Sync Updated png.](https://user-images.githubusercontent.com/87142492/128552407-78cb28e9-47cf-4026-954d-12dc3553af6f.png)
 
-4. Enter your Microsoft tenant name, login attribute, domain suffix, and AAD lookup attribute. These fields will be used for matching users in Canvas with users in Microsoft Azure Active Directory. 
-   * The Login Attribute is the Canvas user attribute utilized for matching.
-   * The Suffix field is optional and lets you specify a domain when there isn't an exact mapping between Canvas attributes and Microsoft AAD fields. For example, if your Canvas email is 'name@example.edu' while the UPN in Microsoft AAD is 'name', you can match users by entering 'example.edu' in the suffix field.
-   * The Active Directory Lookup Attribute is the field on the Microsoft side which Canvas attributes are matched to. Select in between UPN, primary email address, or the email alias.
+6. Fill out the following fields with the appropriate information. These fields will be used for matching users in Canvas with users in AAD. 
+   * The **Tenant Name** is your Microsoft tenant name.
+   * The **Login Attribute** is one of the following Canvas user attributes used for mapping:
+      * **Email** is the Canvas user's default email address. If users change their default email address in Canvas, their enrollment in a course could be blocked from syncing to Teams.
+      * **Unique User ID** is the user's Canvas login ID.
+      * **SIS User ID** is the ID value that is populated from the Student Information System (SIS) and is viewable on the user's profile page.
+      * **Integration ID** is only populated via SIS imports and is viewable on the user's profile page. Typically, this unique identifier is provided by the institution and used in account trusts or consortia situations to identify users across multiple accounts.
 
-5. Select **Update Settings** once done.
+   * The **Suffix** field is optional and lets you specify a domain when there isn't an exact mapping between Canvas attributes and Microsoft AAD fields. For example, if your Canvas email is 'name@example.edu' while the UPN in Microsoft AAD is 'name', you can match users by entering '@example.edu' in the suffix field. The domain should be entered in this field with the preceding @.
+   * The **Active Directory Lookup Attribute** is the field in AAD to which Canvas attributes are matched. Select UPN, primary email address, or the email alias.
 
-6. To approve access for Canvas’s **Microsoft-Teams-Sync-for-Canvas** Azure app, select the **Grant tenant access** link. You'll be redirected to the Microsoft Identity Platform Admin Consent Endpoint.
+7. Select **Update Settings**.
+
+8. To approve access for Canvas’s **Microsoft-Teams-Sync-for-Canvas** Azure app, select the **Grant tenant access** link. You'll be redirected to the Microsoft Identity Platform Admin Consent Endpoint.
 
    ![permissions.](media/permissions.png)
+> [!NOTE] 
+> This step must be performed by a Microsoft tenant admin that can approve apps.
+9. Select **Accept**. 
 
-7. Select **Accept**. 
+8. Enable the Microsoft Teams Sync by turning the toggle on.
 
 > [!NOTE]
-> Sync is a functionality that is managed by LMS partner and is used to sync membership at a course level to the Teams team using Microsoft graph APIs. This is primarily a functionality that an educator switches on as true at a course level. Subsequently any membership change done on LMS side for the addition or deletion of the members gets reflected using the Sync implemented by the LMS partner. Even before this process is enabled for an Educator the M365 education institute admin allows their educators to access sync using the Sync permission modal found below. These permissions are granted to the LMS partner to enable educators to sync membership between the LMS course and Teams Class teams.
-
-8. Enable the Microsoft Teams sync by turning the toggle on.
+> Microsoft Teams Sync is managed by the Canvas administrator and allows educators to enable the sync at the individual course level using the Microsoft Graph API. When enabled, this sync allows classes to be created in Teams, and the membership is synced based on the enrollment of the course in Canvas.
 
    ![teams-sync.](media/teams-sync.png)
 
