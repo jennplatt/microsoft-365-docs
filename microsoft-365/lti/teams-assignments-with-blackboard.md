@@ -21,9 +21,7 @@ For an overview of all of the Microsoft integrations for learning management sys
 >The user who performs this integration should have a System Administrator system role in Blackboard.
 
 > [!IMPORTANT]
-> If you have previously deployed the Preview of the integration, you will need to re-deploy the tool in Blackboard following the new deployment steps below. Our URLs have changed, and cannot currently be syncrhonized into your current preview deployment. The preview deployment should be delted or hidden as the old URLs will not be supported in the near future and the old deployment will stop working.
-> 
-> :::image type="content" source="media/teams-assignment-settings.png" alt-text="Screenshot of Teams Assignment settings." border="true":::
+> If you have previously deployed the preview version of the integration, you need to re-deploy the tool in Blackboard following the new deployment steps below. Our URLs have changed and cannot currently be syncronized into your current preview deployment. The preview deployment should be deleted or hidden as the old URLs will not be supported in the near future and the old deployment will stop working.
 
 > [!IMPORTANT]
 >By installing and using the Teams Assignments LTI app, educators and students can transmit grades to the LMS where the terms of use and privacy policy of that application apply.
